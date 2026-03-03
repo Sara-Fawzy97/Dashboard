@@ -1,0 +1,37 @@
+<!-- <table mat-table [dataSource]="products"> -->
+<!-- </table> -->
+<!-- products.component.html -->
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Products</h1>
+<p class="text-gray-600 mb-6"> {{ total()}} products found</p>
+  <!-- Search & Category -->
+  <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
+    <input type="text" (ngModelChange)="onSearchChange()"
+           placeholder="Search products..." class="border rounded p-2 flex-1" />
+    <select (change)="onCategoryChange()"
+            class="border rounded p-2">
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <mat-card *ngFor="let product of products()" @fadeIn
+              class="shadow-lg hover:shadow-xl transition duration-300 rounded-2xl">
+      <img [src]="product.thumbnail" class="w-full h-48 object-cover rounded-t-2xl" />
+      <mat-card-content class="p-4">
+        <h2 class="font-semibold text-gray-800">{{ product.title }}</h2>
+        <p class="text-green-600 font-bold">${{ product.price }}</p>
+        <p class="text-gray-500 text-sm">Rating: {{ product.rating }}</p>
+        <p class="text-gray-400 text-xs mt-1">{{ product.category }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Pagination Buttons -->
+  <div class="flex justify-center gap-4 mt-6">
+    <button (click)="prevPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Prev</button>
+    <span class="px-4 py-2">Page {{ page() }} / {{ xx }}</span>
+    <button (click)="nextPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Next</button>
+  </div>
+</div>

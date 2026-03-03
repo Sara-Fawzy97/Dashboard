@@ -1,0 +1,39 @@
+<aside
+  class="bg-white shadow-md w-64 flex flex-col transition-all duration-300
+         fixed md:relative h-full z-20"
+  [class.-translate-x-full]="!isSidebarOpen && isMobile"
+>
+ <!-- Mobile Hamburger -->
+  <a class="md:hidden text-gray-600 mr-3" (click)=" isSidebarOpen.set(false)">
+    <i class="fa-solid fa-bars"></i>
+  </a>
+
+  <!-- Brand / Logo -->
+  <div class="flex items-center justify-center p-4 text-2xl font-semibold text-blue-600">
+    AdminPanel
+  </div>
+
+  <!-- Navigation -->
+  <nav class="mt-6 flex-1">
+    <a routerLink="/" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-blue-100 transition">
+      <i class="fa-solid fa-chart-line text-blue-600 w-5 cursor-pointer"></i>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/products" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-blue-100 transition">
+      <i class="fa-solid fa-box text-blue-600 w-5 "></i>
+      <span>Products</span>
+    </a>
+    <a routerLink="/users" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-blue-100 transition">
+      <i class="fa-solid fa-users text-blue-600 w-5"></i>
+      <span>Users</span>
+    </a>
+  </nav>
+
+  <!-- Mobile Close Button -->
+  <a
+    class="absolute top-4 right-4 md:hidden text-gray-600"
+    (click)="isSidebarOpen.set(true)"
+  >
+    <i class="fa-solid fa-xmark"></i>
+</a>
+</aside>

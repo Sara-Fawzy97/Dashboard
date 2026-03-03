@@ -1,0 +1,82 @@
+// products.component.ts
+import { Component, signal } from '@angular/core';
+import {  Product } from '../../interface/Product';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { trigger, style, animate, transition } from '@angular/animations';
+import { ProductsServiceService } from '../../shared/services/products-service.service';
+
+@Component({
+  selector: 'app-products',
+  standalone: true,
+  imports: [CommonModule, MatCardModule, MatButtonModule, FormsModule],
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
+})
+export class ProductsComponent {
+  products = signal<Product[]>([]);
+  total = signal(0);
+  page = signal(1);
+  limit = 8;
+
+  search = signal('');
+  category = signal('All');
+
+  categories = ['All', 'Beauty', 'Electronics', 'Clothing', 'Home'];
+
+  constructor(private productsService: ProductsServiceService) {}
+
+  ngOnInit() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    const skip = (this.page() - 1) * this.limit;
+    this.productsService.getProducts().subscribe({
+      next: (res: any) => {
+        this.products.set(res.products);
+        this.total.set(res.total);
+        
+        this.xx = Math.ceil(this.total() / this.limit);
+      }
+    });
+  }
+xx:number=0
+  onSearchChange() {
+    this.page.set(1);
+    this.loadProducts();
+  }
+
+  onCategoryChange() {
+    this.page.set(1);
+    this.loadProducts();
+  }
+
+  nextPage() {
+    if (this.page() * this.limit < this.total()) {
+      this.page.update(p => p + 1);
+      this.loadProducts();
+    }
+  }
+
+  prevPage() {
+    if (this.page() > 1) {
+      this.page.update(p => p - 1);
+      this.loadProducts();
+    }
+  }
+}
+
+function next(res: any, any: any): ((value: any) => void) | Partial<import("rxjs").Observer<any>> | null | undefined {
+  throw new Error('Function not implemented.');
+}
