@@ -12,6 +12,10 @@ baseUrl="https://dummyjson.com"
     return this.http.get<any>(`${this.baseUrl}/users`);
   }
 
+  getUsersPagination(limit: number, skip: number) {
+    return this.http.get<any>(`${this.baseUrl}/users?limit=${limit}&skip=${skip}`);
+  }
+
   searchUsers(query: string) {
     return this.http.get<any>(`${this.baseUrl}/users/search?q=${query}`);
   }

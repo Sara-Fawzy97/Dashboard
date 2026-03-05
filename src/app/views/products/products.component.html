@@ -15,23 +15,27 @@
   </div>
 
   <!-- Products Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <mat-card *ngFor="let product of products()" @fadeIn
-              class="shadow-lg hover:shadow-xl transition duration-300 rounded-2xl">
-      <img [src]="product.thumbnail" class="w-full h-48 object-cover rounded-t-2xl" />
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <mat-card  (click)="openProduct(product)" *ngFor="let product of products()" @fadeIn
+              class="shadow-lg hover:cursor-pointer hover:shadow-xl transition duration-300 rounded-2xl ">
+      <div class="bg-gray-100 m-4 overflow-hidden rounded-lg">
+              <img [src]="product.thumbnail" alt="{{product.title}}" class="w-full h-full object-cover rounded-t-2xl  transition-transform group-hover:scale-105" />
+      </div>
       <mat-card-content class="p-4">
-        <h2 class="font-semibold text-gray-800">{{ product.title }}</h2>
-        <p class="text-green-600 font-bold">${{ product.price }}</p>
-        <p class="text-gray-500 text-sm">Rating: {{ product.rating }}</p>
-        <p class="text-gray-400 text-xs mt-1">{{ product.category }}</p>
-      </mat-card-content>
+        <p class="text-gray-400 text-xs mt-1 capitalize">{{ product.category }}</p>
+        <h3 class=" text-sm font-medium mt-0.5 text-gray-800 text-card-foreground line-clamp-1">{{ product.title }}</h3>
+        <div class="flex items-center justify-between">
+        <span class="text-green-600 font-semibold text-sm">${{ product.price }}</span>
+        <span class="text-gray-500 text-sm"> <i class="fa-solid fa-star h-3 w-3" style="color: rgb(255, 212, 59);"></i> {{ product.rating }}</span>
+      </div>
+    </mat-card-content>
     </mat-card>
   </div>
 
   <!-- Pagination Buttons -->
   <div class="flex justify-center gap-4 mt-6">
     <button (click)="prevPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Prev</button>
-    <span class="px-4 py-2">Page {{ page() }} / {{ xx }}</span>
+    <span class="px-4 py-2">Page {{ page() }} / {{ totalPages }}</span>
     <button (click)="nextPage()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Next</button>
   </div>
 </div>

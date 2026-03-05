@@ -14,3 +14,14 @@ mat-card {
   -ms-border-radius:10px ;
   -o-border-radius:10px ;
 }
+
+.custom-dialog .mat-mdc-dialog-container {
+  border-radius: 16px;
+  padding: 0;
+}
+
+table{
+    background-color: #fff !important;
+    
+
+}

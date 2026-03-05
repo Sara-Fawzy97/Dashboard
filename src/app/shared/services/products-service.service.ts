@@ -15,8 +15,12 @@ export class ProductsServiceService {
     return this.http.get<any>(`${this.baseUrl}/products`);
   }
 
-   getProductsPaginate(limit: number = 10, skip: number = 0): Observable<any> {
-    return this.http.get(`${this.baseUrl}?limit=${limit}&skip=${skip}`);
+ getProductsPaginate(limit: number = 10, skip: number = 0): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/products?limit=${limit}&skip=${skip}`);
+}
+
+  getProductByCategory(category: string) {
+    return this.http.get<any>(`${this.baseUrl}/products/category/${category}`);
   }
 
   searchProducts(query: string) {

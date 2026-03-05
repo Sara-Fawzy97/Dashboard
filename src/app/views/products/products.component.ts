@@ -7,11 +7,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ProductsServiceService } from '../../shared/services/products-service.service';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { OneProductComponent } from '../one-product/one-product.component';
+
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, FormsModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, FormsModule, MatDialogModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
   animations: [
@@ -34,7 +37,7 @@ export class ProductsComponent {
 
   categories = ['All', 'Beauty', 'Electronics', 'Clothing', 'Home'];
 
-  constructor(private productsService: ProductsServiceService) {}
+  constructor(private productsService: ProductsServiceService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -42,16 +45,17 @@ export class ProductsComponent {
 
   loadProducts() {
     const skip = (this.page() - 1) * this.limit;
-    this.productsService.getProducts().subscribe({
+    this.productsService.getProductsPaginate(this.limit,skip).subscribe({
       next: (res: any) => {
         this.products.set(res.products);
         this.total.set(res.total);
         
-        this.xx = Math.ceil(this.total() / this.limit);
+        this.totalPages = Math.ceil(this.total() / this.limit);
       }
     });
   }
-xx:number=0
+totalPages:number=0
+
   onSearchChange() {
     this.page.set(1);
     this.loadProducts();
@@ -75,8 +79,16 @@ xx:number=0
       this.loadProducts();
     }
   }
+
+  openProduct(product: Product) {
+
+  this.dialog.open(OneProductComponent, {
+    data: product,
+    width: '500px',
+        panelClass: 'custom-dialog'
+  });
+
+}
 }
 
-function next(res: any, any: any): ((value: any) => void) | Partial<import("rxjs").Observer<any>> | null | undefined {
-  throw new Error('Function not implemented.');
-}
+

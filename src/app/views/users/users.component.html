@@ -1,1 +1,66 @@
-<p>users works!</p>
+<mat-card class="p-4 bg-white overflow-x-auto">
+
+  <table mat-table [dataSource]="users" class=" w-full  min-w-[800px]  ">
+
+    <!-- Avatar -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500">User</th>
+      <td mat-cell *matCellDef="let user">
+        <img [src]="user.image" class="w-10 h-10 rounded-full" />
+      </td>
+    </ng-container>
+
+    <!-- Name -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500">Name</th>
+      <td mat-cell *matCellDef="let user" class="text-black font-medium">
+        {{user.firstName}} {{user.lastName}}
+      </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500">Email</th>
+      <td mat-cell *matCellDef="let user" class="text-gray-500">
+        {{user.email}}
+      </td>
+    </ng-container>
+
+    <!-- Phone -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500 hidden sm:table-cell">Phone</th>
+      <td mat-cell *matCellDef="let user" class="text-gray-500 hidden sm:table-cell">
+        {{user.phone}}
+      </td>
+    </ng-container>
+
+    <!-- Age -->
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500">Age</th>
+      <td mat-cell *matCellDef="let user" class="text-gray-500">
+        {{user.age}}
+      </td>
+    </ng-container>
+
+    <!-- Company -->
+    <ng-container matColumnDef="company">
+      <th mat-header-cell *matHeaderCellDef class="text-gray-500 hidden md:table-cell">Company</th>
+      <td mat-cell *matCellDef="let user" class="text-gray-500 hidden md:table-cell">
+        {{user.company.name}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"  class="hover:bg-gray-100 transition cursor-pointer"></tr>
+
+  </table>
+
+  <!-- Pagination -->
+  <mat-paginator
+    [length]="totalUsers"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5,10,20]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+</mat-card>
