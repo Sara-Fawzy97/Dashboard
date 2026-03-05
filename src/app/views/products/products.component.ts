@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ProductsServiceService } from '../../shared/services/products-service.service';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OneProductComponent } from '../one-product/one-product.component';
 
 
@@ -82,13 +82,37 @@ totalPages:number=0
 
   openProduct(product: Product) {
 
-  this.dialog.open(OneProductComponent, {
+  const dialogRef=this.dialog.open(OneProductComponent, {
     data: product,
     width: '500px',
         panelClass: 'custom-dialog'
   });
+  
+  dialogRef.afterClosed().subscribe(result =>{
+
+   if(!result) return;
+
+    // لو المنتج اتعدل
+    if(result.id){
+
+      this.products.update(products =>
+        products.map(p => p.id === result.id ? result : p)
+      );
+
+    }
+       if(result.deletedId){
+
+      this.products.update(products =>
+        products.filter(p => p.id !== result.deletedId)
+      );
+
+    }
+
+})
 
 }
+
+
 }
 
 

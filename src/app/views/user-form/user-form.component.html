@@ -1,0 +1,57 @@
+<h2 mat-dialog-title class="text-xl font-semibold text-gray-700 mb-3">
+  {{data ? 'Edit User' : 'Add User'}}
+</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="submitForm()" class="space-y-4 p-5">
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName">
+      <mat-error *ngIf="userForm.controls.firstName.touched && userForm.controls.firstName.invalid">
+        Required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName">
+      <mat-error *ngIf="userForm.controls.lastName.touched && userForm.controls.lastName.invalid">
+        Required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+      <mat-error *ngIf="userForm.controls.email.touched && userForm.controls.email.invalid">
+        <span *ngIf="userForm.controls.email.errors?.['required']">Required</span>
+        <span *ngIf="userForm.controls.email.errors?.['email']">Invalid email</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone">
+      <mat-error *ngIf="userForm.controls.phone.touched && userForm.controls.phone.invalid">
+        Required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full sm:col-span-2">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" formControlName="age">
+      <mat-error *ngIf="userForm.controls.age.touched && userForm.controls.age.invalid">
+        Required (min 1)
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div class="flex flex-col sm:flex-row justify-end gap-3 mt-2">
+    <button mat-button mat-dialog-close class="w-full sm:w-auto">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid" class="w-full sm:w-auto">Save</button>
+  </div>
+
+</form>
