@@ -9,6 +9,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { ProductsServiceService } from '../../shared/services/products-service.service';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OneProductComponent } from '../one-product/one-product.component';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 
 @Component({
@@ -31,10 +32,10 @@ export class ProductsComponent {
   total = signal(0);
   page = signal(1);
   limit = 8;
-
-  search = signal('');
+  searchQuery = signal('');
+  selectedCategory = signal('');
   category = signal('All');
-
+searchTerm = signal('')
   categories = ['All', 'Beauty', 'Electronics', 'Clothing', 'Home'];
 
   constructor(private productsService: ProductsServiceService, private dialog: MatDialog) {}
@@ -112,6 +113,23 @@ totalPages:number=0
 
 }
 
+//to add new product
+openAddProduct(){
+ const dialogRef = this.dialog.open(AddProductComponent,{
+   width:'500px'
+ })
+
+ dialogRef.afterClosed().subscribe(product=>{
+
+   if(product){
+
+     this.products.update(p => [...p, product])
+
+   }
+
+ })
+
+}
 
 }
 

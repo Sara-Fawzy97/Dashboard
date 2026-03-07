@@ -1,1 +1,56 @@
-<p>add-product works!</p>
+<section class="max-w-md w-full mx-auto p-4 md:p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">
+    Add Product
+  </h2>
+
+  <form class="space-y-4">
+
+    <!-- Title -->
+    <div>
+      <input 
+        type="text" 
+        [(ngModel)]="product.title" 
+        placeholder="Title"
+        class="w-full h-10 md:h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ed3c0b]">
+    </div>
+
+    <!-- Price -->
+    <div>
+      <input 
+        type="number" 
+        [(ngModel)]="product.price" 
+        placeholder="Price"
+        class="w-full h-10 md:h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ed3c0b]">
+    </div>
+
+    <!-- Category -->
+    <div>
+      <input 
+        type="text" 
+        [(ngModel)]="product.category" 
+        placeholder="Category"
+        class="w-full h-10 md:h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ed3c0b]">
+    </div>
+
+    <!-- Description -->
+    <div>
+      <textarea 
+        [(ngModel)]="product.description" 
+        placeholder="Description"
+        rows="4"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ed3c0b] resize-none md:resize-y">
+      </textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button 
+        type="button" 
+        (click)="addProduct()"
+        class="w-full md:w-auto px-6 py-2 bg-[#ed3c0b] text-white font-semibold rounded-md hover:bg-[#d6340a] transition">
+        Add
+      </button>
+    </div>
+
+  </form>
+</section>
