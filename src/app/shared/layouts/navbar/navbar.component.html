@@ -1,18 +1,21 @@
 <header class="bg-white shadow-md shadow-gray-200 px-6 py-3 flex justify-between items-center sticky top-0 z-10">
+
   <!-- Mobile Hamburger -->
-  <a class="md:hidden text-gray-600 mr-3" (click)=" isSidebarOpen.set(true)">
+  <button class="md:hidden text-gray-600 mr-3" (click)="isSidebarOpen.set(!isSidebarOpen())">
     <i class="fa-solid fa-bars"></i>
-  </a>
+  </button>
 
   <!-- Search Bar -->
   <input
     type="text"
     placeholder="Search..."
-    class="hidden md:block border rounded-lg px-3 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    class="border rounded-lg px-3 py-2 w-1/2 md:w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
 
   <!-- Icons & Profile -->
   <div class="flex items-center gap-4">
+
+    <!-- Notification -->
     <button class="relative text-gray-600 hover:text-gray-800">
       <i class="fa-solid fa-bell text-xl"></i>
       <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
@@ -23,11 +26,13 @@
       <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold cursor-pointer">
         JD
       </div>
+
       <div class="absolute right-0 mt-2 w-40 bg-white shadow-md rounded hidden group-hover:block">
-        <a class="block px-4 py-2 hover:bg-gray-100">Profile</a>
-        <a class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-        <a class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+        <a class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</a>
+        <a class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</a>
+        <a class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</a>
       </div>
     </div>
+
   </div>
 </header>

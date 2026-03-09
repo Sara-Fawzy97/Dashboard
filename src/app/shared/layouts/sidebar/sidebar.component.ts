@@ -1,4 +1,4 @@
-import { Component, signal,computed } from '@angular/core';
+import { Component, signal,computed, Input } from '@angular/core';
 import { RouterLink ,Router,RouterModule} from "@angular/router";
 
 @Component({
@@ -10,10 +10,19 @@ import { RouterLink ,Router,RouterModule} from "@angular/router";
 })
 export class SidebarComponent {
 
-    isSidebarOpen = signal(false);
+  @Input()  isSidebarOpen = signal(false);
+    isMobile = signal(false);
 
-  get isMobile() {
-    return window.innerWidth < 768;
-  }
-  
+ngOnInit(){
+
+ if(typeof window !== 'undefined'){
+   this.isMobile.set(window.innerWidth < 768);
+
+    window.addEventListener('resize', () => {
+      this.isMobile.set(window.innerWidth < 768);
+    });
+
+ }
+
+}
 }

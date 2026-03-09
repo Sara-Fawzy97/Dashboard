@@ -1,4 +1,4 @@
-import { Component ,signal,computed} from '@angular/core';
+import { Component,Input ,signal,computed} from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +8,20 @@ import { Component ,signal,computed} from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-    isSidebarOpen = signal(false);
+ 
+  // parent passes down a shared signal
+  @Input() isSidebarOpen= signal(false);
 
-  get isMobile() {
-    return window.innerWidth < 768;
-  }
+// ngOnInit(){
+
+//  if(typeof window !== 'undefined'){
+//    this.isMobile.set(window.innerWidth < 768);
+
+//     window.addEventListener('resize', () => {
+//       this.isMobile.set(window.innerWidth < 768);
+//     });
+
+//  }
+
+// }
 }
