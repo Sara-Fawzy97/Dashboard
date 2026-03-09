@@ -38,4 +38,7 @@ export class ProductsServiceService {
   deleteProuct(id: number) {
     return this.http.delete<any>(`${this.baseUrl}/products/${id}`);
   }
+getCategories() {
+  return this.http.get<any>(`${this.baseUrl}/products/category-list`);
+}
 }

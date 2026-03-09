@@ -1,5 +1,5 @@
 // products.component.ts
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import {  Product } from '../../interface/Product';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -42,30 +42,40 @@ searchTerm = signal('')
 
   ngOnInit() {
     this.loadProducts();
+  this.productsCategory();
+  this.serachProduct();
+    
   }
 
+ // to display products with pagination
   loadProducts() {
     const skip = (this.page() - 1) * this.limit;
     this.productsService.getProductsPaginate(this.limit,skip).subscribe({
       next: (res: any) => {
         this.products.set(res.products);
         this.total.set(res.total);
-        
+        // console.log(res.products.map((p: { category: any; }) => p.category));
         this.totalPages = Math.ceil(this.total() / this.limit);
       }
     });
   }
+
+  productsCategories=signal<string[]>([]);
+  productsCategory(){
+    this.productsService.getCategories().subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        this.productsCategories.set(res);
+      }
+    })
+  }
+
+
+
+
 totalPages:number=0
 
-  onSearchChange() {
-    this.page.set(1);
-    this.loadProducts();
-  }
-
-  onCategoryChange() {
-    this.page.set(1);
-    this.loadProducts();
-  }
+  
 
   nextPage() {
     if (this.page() * this.limit < this.total()) {
@@ -81,6 +91,7 @@ totalPages:number=0
     }
   }
 
+  //to open one product in dialog
   openProduct(product: Product) {
 
   const dialogRef=this.dialog.open(OneProductComponent, {
@@ -130,6 +141,41 @@ openAddProduct(){
  })
 
 }
+
+
+//when search query changes
+onSearchChange(value:string) {
+    this.searchQuery.set(value);
+    this.page.set(1);
+    this.serachProduct();
+  }
+
+  //when category changes
+  onCategoryChange(value:string) {
+    this.selectedCategory.set(value);
+    this.page.set(1);
+    this.getProductsByCategory();
+  }
+
+serachProduct(){
+  this.productsService.searchProducts(this.searchQuery()).subscribe({
+    next:(res:any)=>{
+      console.log(res);
+      this.products.set(res.products);
+    }
+  })
+}
+
+getProductsByCategory(){
+  this.productsService.getProductByCategory(this.selectedCategory()).subscribe({
+    next:(res:any)=>{
+      // console.log(res);
+      this.products.set(res.products);
+       }
+    })
+
+}
+
 
 }
 

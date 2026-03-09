@@ -8,11 +8,14 @@
 </div>
   <!-- Search & Category -->
   <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
-    <input type="text" (ngModelChange)="onSearchChange()"
-           placeholder="Search products..." class="border rounded p-2 flex-1" />
-    <select (change)="onCategoryChange()"
-            class="border rounded p-2">
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    <input type="text" [ngModel]="searchQuery()" (ngModelChange)="onSearchChange($event)"
+placeholder="Search products..."
+class="border rounded p-2 flex-1" />
+
+    <select [ngModel]="selectedCategory()" (ngModelChange)="onCategoryChange($event)"
+           class="border rounded p-2">
+           <option value="">All</option>
+      <option *ngFor="let c of productsCategories()" [value]="c">{{ c }}</option>
     </select>
   </div>
 
